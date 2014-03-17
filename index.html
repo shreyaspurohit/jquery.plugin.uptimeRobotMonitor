@@ -38,7 +38,8 @@
 
 <p>Make sure to include jquery script before proceeding. Include the plugin script in the head of the HTML page.</p>
 
-<pre><code>&lt;script type="text/javascript" src="https://raw.github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/master/src/jquery.uptimeRobotMonitor.js"&gt;&lt;/script&gt;
+<pre><code>&lt;script type="text/javascript" 
+    src="http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/src/js/jquery.uptimeRobotMonitor.js"&gt;&lt;/script&gt;
 </code></pre>
 
 <p>On document ready, call the plugin by providing the minimum configurations - monitor API Key (generated from your uptime robot control panel) and a server name to display.</p>
@@ -120,10 +121,17 @@
 <ul>
 <li>Number of custom uptime ratio's is limited to first 3. If you provide for eg, 1-7-30-360, only 1,7 and 30 are considered.</li>
 <li>Width and Height provided by the options must be sufficient enough to hold all monitors. This is not automated. If not, monitors over write. Just increase the width in which case.</li>
+<li>Currently only one row of monitors is supported. You might not be able to create a new row with new set of monitors on the same page. Will be fixed shortly.</li>
+<li>The states are static and does not have refresh capability. Will be fixed shortly. </li>
 </ul><h2>
 <a name="live-in-action" class="anchor" href="#live-in-action"><span class="octicon octicon-link"></span></a>Live in Action</h2>
 
-<p>The plugin can be seen live in action <a href="http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html">here</a> which uses the uptime monitors for my servers.</p>
+<p>The plugin can be seen live in action <a href="http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html">http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html</a> and <a href="http://unlockalert.bitourea.com/server-status">http://unlockalert.bitourea.com/server-status</a> which uses the uptime monitors for my servers.</p>
+
+<h2>
+<a name="project-site" class="anchor" href="#project-site"><span class="octicon octicon-link"></span></a>Project Site</h2>
+
+<p>The project site is generated using the github pages and modified. It is hosted at <a href="http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/">http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/</a>.</p>
 
 <h2>
 <a name="licensing" class="anchor" href="#licensing"><span class="octicon octicon-link"></span></a>Licensing</h2>
