@@ -81,6 +81,8 @@ Constraints
 
 * Number of custom uptime ratio's is limited to first 3. If you provide for eg, 1-7-30-360, only 1,7 and 30 are considered.
 * Width and Height provided by the options must be sufficient enough to hold all monitors. This is not automated. If not, monitors over write. Just increase the width in which case.
+* Currently only one row of monitors is supported. You might not be able to create a new row with new set of monitors on the same page. Will be fixed shortly.
+* The states are static and does not have refresh capability. Will be fixed shortly. 
 
 Live in Action
 --------------
