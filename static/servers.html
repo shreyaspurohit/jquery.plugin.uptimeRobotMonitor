@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>UptimeRobot status</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" ></script>
+		<script src="https://raw.github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/master/src/js/jquery.uptimeRobotMonitor.js"></script>
+		<script type="text/javascript">			
+			
+			$( document ).ready(function() {
+				$("body").uptimeRobotMonitor({monitorConfs: [
+				{
+					apiKey: "m776062965-74db39b7be9c77cf3570f246",
+					name: "Server 1",
+					color: "#5cb85c",
+					customUptimeRatio: "1-7"
+				},
+				{
+					apiKey: "m776062966-688de8919b17dc1c2cc15087",
+					name: "Server 2",
+					color: "#957EE6"
+				},
+				{
+					apiKey: "m776062964-e6dda35adb11270fbd5e135f",
+					name: "Server 3",
+					color: "#E67EA8",
+				}], width: "640", height: "240"});
+			});
+		</script>
+		<style type="text/css">
+			.uptimeContainer {
+				border:1px solid #e3e3e3;
+			}
+			.center{
+				margin: 0 auto;
+				width:640px;
+			}
+		</style>
+	</head>
+	<body id="body" class="center">
+	
+	</body>
+</html>
