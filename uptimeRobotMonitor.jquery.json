@@ -1,6 +1,6 @@
 {
   "name": "uptimeRobotMonitor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "title": "jQuery Uptime Robot Monitor",
   "description": "This plugin allows you to show off the servers uptimes monitored by Uptime Robot (http://uptimerobot.com/)",
   "author": {
@@ -22,9 +22,9 @@
     "plugin"
   ],
   "bugs": "https://github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/issues",
-  "homepage": "https://github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/",
+  "homepage": "http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/",
   "demo": "http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/",
-  "docs": "https://github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/",
+  "docs": "http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/",
   "dependencies": {
     "jquery": ">=2.1.0"
   }
