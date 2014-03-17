@@ -85,7 +85,12 @@ Constraints
 Live in Action
 --------------
 
-The plugin can be seen live in action http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html which uses the uptime monitors for my servers.
+The plugin can be seen live in action http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html and http://unlockalert.bitourea.com/server-status which uses the uptime monitors for my servers.
+
+Project Site
+------------
+
+The project site is generated using the github pages and modified. It is hosted at http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/.
 
 Licensing
 ---------
