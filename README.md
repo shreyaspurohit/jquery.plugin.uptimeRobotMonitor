@@ -8,7 +8,8 @@ Usage
 
 Make sure to include jquery script before proceeding. Include the plugin script in the head of the HTML page.
 
-	<script type="text/javascript" src="https://raw.github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/master/src/jquery.uptimeRobotMonitor.js"></script>
+	<script type="text/javascript" 
+		src="http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/src/js/jquery.uptimeRobotMonitor.js"></script>
 	
 On document ready, call the plugin by providing the minimum configurations - monitor API Key (generated from your uptime robot control panel) and a server name to display.
 	
@@ -84,7 +85,7 @@ Constraints
 Live in Action
 --------------
 
-The plugin is used at "" which uses the uptime monitors for my servers.
+The plugin can be seen live in action http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html which uses the uptime monitors for my servers.
 
 Licensing
 ---------
