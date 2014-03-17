@@ -61,12 +61,12 @@ Default:
     }
     
 * monitorConfs: Configuration for every monitor.
-** apiKey: The monitor API Key (generated from your uptime robot control panel). Refer http://uptimerobot.com/api for more details.
-** color: The base color for this monitor.
-** unavailableColor: The color to use to designate server was not available.
-** backgroundColor: The background color to use for this monitor.
-** percLabelColor: The color of the text font for this monitor.
-** customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.
+	* apiKey: The monitor API Key (generated from your uptime robot control panel). Refer http://uptimerobot.com/api for more details.
+	* color: The base color for this monitor.
+	* unavailableColor: The color to use to designate server was not available.
+	* backgroundColor: The background color to use for this monitor.
+	* percLabelColor: The color of the text font for this monitor.
+	*customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.
 * color: The font color in the container containing all the monitors.
 * backgroundColor: The background color of the container containing the monitors.
 * width: Width of the container.
