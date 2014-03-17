@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>jQuery Uptime Robot Monitor plugin by shreyaspurohit</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>jQuery Uptime Robot Monitor plugin</h1>
+        <h2>This plugin allows you to show off the servers uptimes monitored by Uptime Robot.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="jquery-uptime-robot-plugin" class="anchor" href="#jquery-uptime-robot-plugin"><span class="octicon octicon-link"></span></a>Jquery Uptime Robot Plugin</h1>
+
+<p>The plugin uses UptimeRobot (<a href="http://uptimerobot.com/">http://uptimerobot.com/</a>) API's to display the server statuses. It displays the current server status as UP or DOWN and has the capacity to display uptimes for a max 3 custom days range.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Make sure to include jquery script before proceeding. Include the plugin script in the head of the HTML page.</p>
+
+<pre><code>&lt;script type="text/javascript" src="https://raw.github.com/shreyaspurohit/jquery.plugin.uptimeRobotMonitor/master/src/jquery.uptimeRobotMonitor.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>On document ready, call the plugin by providing the minimum configurations - monitor API Key (generated from your uptime robot control panel) and a server name to display.</p>
+
+<pre><code>$( document ).ready(function() {
+    $("body").uptimeRobotMonitor(options);
+});
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>$( document ).ready(function() {
+    $("body").uptimeRobotMonitor({monitorConfs: [
+    {
+        apiKey: "XXX",
+        name: "Server 1",
+        color: "#5CB85C",
+    },
+    {
+        apiKey: "XXX",
+        name: "Server 2",
+        color: "#957EE6"
+    },
+    {
+        apiKey: "XXX",
+        name: "Server 3",
+        color: "#E67EA8",
+    }]});
+});
+</code></pre>
+
+<h2>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<p>Default:</p>
+
+<pre><code>{
+    monitorConfs: [{
+        apiKey: "",
+        name: "",
+        color: "#5CB85C",
+        unavailableColor: "#E68A00",
+        backgroundColor: "#f5f5f5",
+        percLabelColor: "#000000",                      
+        customUptimeRatio: "1-7"
+    }],                     
+    color: "green",
+    backgroundColor: "#F5F5F5",
+    width: "640",
+    height: "240",
+    containerClass: "uptimeContainer",
+    containerId: "uptimeContainer",
+    font: "12px Arial"
+}
+</code></pre>
+
+<ul>
+<li>monitorConfs: Configuration for every monitor.
+
+<ul>
+<li>apiKey: The monitor API Key (generated from your uptime robot control panel). Refer <a href="http://uptimerobot.com/api">http://uptimerobot.com/api</a> for more details.</li>
+<li>color: The base color for this monitor.</li>
+<li>unavailableColor: The color to use to designate server was not available.</li>
+<li>backgroundColor: The background color to use for this monitor.</li>
+<li>percLabelColor: The color of the text font for this monitor.
+*customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.</li>
+</ul>
+</li>
+<li>color: The font color in the container containing all the monitors.</li>
+<li>backgroundColor: The background color of the container containing the monitors.</li>
+<li>width: Width of the container.</li>
+<li>height: Height of the container.</li>
+<li>containerClass: The CSS class associated with container that you can target.</li>
+<li>containerId: The 'id' of the container.</li>
+<li>font: The font size followed by the font type.</li>
+</ul><h2>
+<a name="constraints" class="anchor" href="#constraints"><span class="octicon octicon-link"></span></a>Constraints</h2>
+
+<ul>
+<li>Number of custom uptime ratio's is limited to first 3. If you provide for eg, 1-7-30-360, only 1,7 and 30 are considered.</li>
+<li>Width and Height provided by the options must be sufficient enough to hold all monitors. This is not automated. If not, monitors over write. Just increase the width in which case.</li>
+</ul><h2>
+<a name="live-in-action" class="anchor" href="#live-in-action"><span class="octicon octicon-link"></span></a>Live in Action</h2>
+
+<p>The plugin is used at "" which uses the uptime monitors for my servers.</p>
+
+<h2>
+<a name="licensing" class="anchor" href="#licensing"><span class="octicon octicon-link"></span></a>Licensing</h2>
+
+<p>Released under MIT license, go ahead and use, modify, distribute as you wish, but do not forget to include the associated license too with it. The license is provided in LICENSE.txt. The license of other libraries used must be used as defined by them.             </p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
