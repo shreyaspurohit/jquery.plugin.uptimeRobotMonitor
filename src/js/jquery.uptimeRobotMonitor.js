@@ -1,7 +1,4 @@
 (function ( $ ) {
-	var $this = null;
-	var $setting = null;
-	var c = null;
 	var UROB_API_URL = "http://api.uptimerobot.com/";
 	var defaultMonitorConf = {
         	color: "#5cb85c",
@@ -12,13 +9,18 @@
     };
 	
 	var methods = {
-		init: function(){						
-			$this.append($("<canvas> Browser does not support required HTML5 Canvas element. </canvas>").
-					  attr("width", $setting.width).
-					  attr("height", $setting.height).
-					  attr("id", $setting.containerId).
-					  addClass($setting.containerClass)
-					);
+		init: function($this, $setting){
+			if($("#" + $setting.containerId).length > 0){
+				clearCanvas($setting);
+			}else{
+				$this.append($("<canvas> Browser does not support required HTML5 Canvas element. </canvas>").
+						attr("width", $setting.width).
+						attr("height", $setting.height).
+						attr("id", $setting.containerId).
+						addClass($setting.containerClass)
+				);				
+			}
+			
 			//Instead of accessing actual DOM from array in Jquery way, this is clearer.
 			var canvas = document.getElementById($setting.containerId);
 			
@@ -26,7 +28,7 @@
 				return false;
 			}
 			
-			c = canvas.getContext("2d");
+			var c = canvas.getContext("2d");
 			
 			if(!c || !c.drawImage){
 				return false;
@@ -34,9 +36,9 @@
 			
 			return true;
 		},					
-		invoke: function(callback){
+		invoke: function($setting, callback){
 			//Draw the header
-			drawUptimeRobotHeader();
+			drawUptimeRobotHeader($setting);
 			
 			//Invoke API for all monitors
 			$.each($setting.monitorConfs, function(index, object){
@@ -44,11 +46,11 @@
 				var url = formGetMonitorUrl(monitorConf);
 				$.getJSON(url, function( data ) {
 					console.log( "Success, url: " + url + ", data: " + JSON.stringify(data));
-					callback(index, monitorConf, data);
+					callback($setting, index, monitorConf, data);
 				});
 			});
 		},					
-		handleApiResponseForCanvas: function(index, monitorConf, data){
+		handleApiResponseForCanvas: function($setting, index, monitorConf, data){
 			if(data.stat == "ok"){//Only if OK response
 				var monitor = data.monitors.monitor[0];
 				var numberOfMonitors = $setting.monitorConfs.length;
@@ -56,7 +58,7 @@
 				var canvasPartSize = $setting.width / numberOfMonitors;
 				var rRatio = 1.5;
 				//Draw the circle representing total
-				draw(index, canvasPartSize, rRatio, monitor.alltimeuptimeratio, {
+				draw($setting, index, canvasPartSize, rRatio, monitor.alltimeuptimeratio, {
 					color: monitorConf.color,
 					unavailableColor: monitorConf.unavailableColor,
 					backgroundColor: monitorConf.backgroundColor,
@@ -73,7 +75,7 @@
 					$.each(uptimes, function(iUpTime, timeVal){
 						rRatio += 0.7;
 						color = nextColor(color);					
-						draw(index, canvasPartSize, rRatio, uptimesVal[iUpTime], {
+						draw($setting, index, canvasPartSize, rRatio, uptimesVal[iUpTime], {
 							color: color,
 							unavailableColor: monitorConf.unavailableColor,
 							backgroundColor: monitorConf.backgroundColor,
@@ -84,7 +86,7 @@
 				}
 								
 				//Draw the circle for current status
-				draw(index, canvasPartSize, rRatio + 0.7, monitor.status == "2" ? 100 : 0.01, {//Must be 0.01 else circle is not drawn when server is down
+				draw($setting, index, canvasPartSize, rRatio + 0.7, monitor.status == "2" ? 100 : 0.01, {//Must be 0.01 else circle is not drawn when server is down
 					color: "#5CE62E",
 					unavailableColor: "#E60000",
 					backgroundColor: monitorConf.backgroundColor,
@@ -93,10 +95,16 @@
 				});
 				
 				//Draw the Server name
-				drawServerName(index, canvasPartSize, monitorConf);
+				drawServerName($setting, index, canvasPartSize, monitorConf);
+				
 			}
 		}
 	};
+	
+	function getContext($setting){
+		var canvas = document.getElementById($setting.containerId);		
+		return canvas.getContext("2d");
+	}
 	
 	function nextColor(hex){
 		var perc = 0.8;//Darken by 20%
@@ -130,12 +138,13 @@
 				monitorConf.apiKey + "&customUptimeRatio=" + monitorConf.customUptimeRatio;
 	}
 	
-	function getPadding(){
+	function getPadding($setting){
 		return 0.1*$setting.height;
 	}
 	
-	function drawUptimeRobotHeader(){
-		var padding = getPadding();
+	function drawUptimeRobotHeader($setting){
+		var c = getContext($setting);
+		var padding = getPadding($setting);
 		var xMid = $setting.width/2;					
 		var yPaddingTop = $setting.height - 0.3*padding;
 		
@@ -146,23 +155,24 @@
 			if(uptimeRobotLogo.width == 180 && uptimeRobotLogo.height == 52){//Must make sure log is not changed to something too big. Better to ignore than over draw.
 		    	c.drawImage(uptimeRobotLogo, 10, yPaddingTop*0.90, uptimeRobotLogo.width*0.50, uptimeRobotLogo.height*0.50);
 			}else{
-				writeUptimeRobot(xMid, yPaddingTop);
+				writeUptimeRobot($setting, xMid, yPaddingTop);
 			}
 		};
 		
 		//Image load fails
 		uptimeRobotLogo.onerror = function(){
-			writeUptimeRobot(xMid, yPaddingTop);
+			writeUptimeRobot($setting, xMid, yPaddingTop);
 		};
 		
 		//Image load aborted
 		uptimeRobotLogo.onabort = function(){
-			writeUptimeRobot(xMid, yPaddingTop);
+			writeUptimeRobot($setting, xMid, yPaddingTop);
 		};
 	}
 	
-	function writeUptimeRobot(xVal, yVal){
+	function writeUptimeRobot($setting, xVal, yVal){
 		//Fill 
+		var c = getContext($setting);
 		c.fillStyle=$setting.color;
 		c.font = "bold " + $setting.font;	
 		c.textAlign = 'center';
@@ -170,17 +180,18 @@
 		c.fillText("Uptime Robot (http://uptimerobot.com/)", xVal, yVal);	
 	}
 	
-	function drawServerName(index, canvasPartSize, monitorConf){
+	function drawServerName($setting, index, canvasPartSize, monitorConf){
 		//Canvas start,end,mid point for monitor based on index in array
 		var xStart = index * canvasPartSize;
 		var xEnd = xStart + canvasPartSize;
 		var xMid = (xStart + xEnd)/2;
 		//Padding for all.
-		var padding = getPadding();
+		var padding = getPadding($setting);
 		var yMid = ($setting.height/2);
 		var yPaddingTop = $setting.height - padding*1.5;
 		
-		//Fill 
+		//Fill
+		var c = getContext($setting);
 		c.fillStyle=$setting.color;
 		c.font = "bold " + $setting.font;	
 		c.textAlign = 'center';
@@ -188,13 +199,13 @@
 		c.fillText(monitorConf.name, xMid, yPaddingTop);
 	}
 	
-	function draw(index, canvasPartSize, radiusRatio, perc, monitorConf){
+	function draw($setting, index, canvasPartSize, radiusRatio, perc, monitorConf){
 		//Canvas start,end,mid point for monitor based on index in array
 		var xStart = index * canvasPartSize;
 		var xEnd = xStart + canvasPartSize;
 		var xMid = (xStart + xEnd)/2;
 		//Canvas y Mid (shifted to top from exact mid by padding), minus padding of 10%
-		var padding = getPadding();
+		var padding = getPadding($setting);
 		var yMid = ($setting.height/2)-padding;
 		//Status radius, h/2 - extra radiusRatio% of padding
 		var radius = ($setting.height/2)-(radiusRatio*padding);
@@ -206,6 +217,7 @@
 		var start = 1.5*Math.PI + arcDisplacement;
 		//Starting from top bottom, increase end angle
 		var end = arc + 1.5*Math.PI + arcDisplacement;
+		var c = getContext($setting);
 		
 		//Draw available arc
 		c.beginPath();
@@ -256,9 +268,28 @@
         context.restore();
     }
 	
+	function clearCanvas($setting){
+		var canvas = document.getElementById($setting.containerId);		
+		var c = canvas.getContext("2d");
+		
+		// Store the current transformation matrix
+		c.save();
+
+		// Use the identity matrix while clearing the canvas
+		c.setTransform(1, 0, 0, 1, 0, 0);
+		c.clearRect(0, 0, canvas.width, canvas.height);
+
+		// Restore the transform
+		c.restore();
+	}
+	
+	function getSantizedMonitorConf(defaultMonitorConf, conf){
+		return $.extend($.extend(true, {}, defaultMonitorConf), conf);
+	}
+	
 	$.fn.uptimeRobotMonitor = function(options){
-		$this = this;
-		$setting = $.extend({
+		var $this = this;
+		var $setting = $.extend({
             monitorConfs: [{
             	color: "",
             	apiKey: "",
@@ -272,14 +303,33 @@
             height: "240",
             containerClass: "uptimeContainer",
             containerId: "uptimeContainer",
-            font: "12px Arial"
+            font: "12px Arial",
+            refresh: true,
+            refreshInterval: 60
         }, options );
-							
-		if(methods.init()){
-			c.fillStyle = $setting.backgroundColor;
-			c.fillRect(0, 0, $setting.width, $setting.height);
-			methods.invoke(methods.handleApiResponseForCanvas);
+		
+		//Sanitize the customUptimeRatio to allow only 3 max values
+		$.each($setting.monitorConfs, function(index, conf){
+			var monitorConf = getSantizedMonitorConf(defaultMonitorConf, conf);					
+			conf.customUptimeRatio = monitorConf.customUptimeRatio.split("-").slice(0, 3).join("-");			
+		});
+				
+		function doAll(){
+			if(methods.init($this, $setting)){
+				var c = getContext($setting);
+				c.fillStyle = $setting.backgroundColor;
+				c.fillRect(0, 0, $setting.width, $setting.height);
+				methods.invoke($setting, methods.handleApiResponseForCanvas);
+			}
 		}
+		
+		doAll();
+		
+		if(true == $setting.refresh){
+			var timerId = setInterval(doAll, $setting.refreshInterval * 1000);
+			return timerId;
+		}
+		
 	};
 	
 }( jQuery ));
