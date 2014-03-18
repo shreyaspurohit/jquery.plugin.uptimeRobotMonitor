@@ -70,8 +70,6 @@ Default:
 	* backgroundColor: The background color to use for this monitor.
 	* percLabelColor: The color of the text font for this monitor.
 	* customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.
-    * refresh: If true refresh's the the sever status repeatedly.
-    * refreshInterval: The interval at which the server status will refresh continuously in seconds.	
 * color: The font color in the container containing all the monitors.
 * backgroundColor: The background color of the container containing the monitors.
 * width: Width of the container.
@@ -79,6 +77,8 @@ Default:
 * containerClass: The CSS class associated with container that you can target.
 * containerId: The 'id' of the container. When using multiple rows of monitor's in the same page this option must be set to unique values.
 * font: The font size followed by the font type.
+* refresh: If true refresh's the the sever status repeatedly.
+* refreshInterval: The interval at which the server status will refresh continuously in seconds.	
 
 Return value
 ------------
