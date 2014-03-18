@@ -14,13 +14,13 @@ Make sure to include jquery script before proceeding. Include the plugin script 
 On document ready, call the plugin by providing the minimum configurations - monitor API Key (generated from your uptime robot control panel) and a server name to display.
 	
 	$( document ).ready(function() {
-		$("body").uptimeRobotMonitor(options);
+		var timerId = $("body").uptimeRobotMonitor(options);
 	});
 
 Example:
 	
 	$( document ).ready(function() {
-		$("body").uptimeRobotMonitor({monitorConfs: [
+	var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
 		{
 			apiKey: "XXX",
 			name: "Server 1",
@@ -58,7 +58,9 @@ Default:
 	    height: "240",
 	    containerClass: "uptimeContainer",
 	    containerId: "uptimeContainer",
-	    font: "12px Arial"
+	    font: "12px Arial",
+	    refresh: true,
+        refreshInterval: 60	    
     }
     
 * monitorConfs: Configuration for every monitor.
@@ -67,22 +69,29 @@ Default:
 	* unavailableColor: The color to use to designate server was not available.
 	* backgroundColor: The background color to use for this monitor.
 	* percLabelColor: The color of the text font for this monitor.
-	*customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.
+	* customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.
+    * refresh: If true refresh's the the sever status repeatedly.
+    * refreshInterval: The interval at which the server status will refresh continuously in seconds.	
 * color: The font color in the container containing all the monitors.
 * backgroundColor: The background color of the container containing the monitors.
 * width: Width of the container.
 * height: Height of the container.
 * containerClass: The CSS class associated with container that you can target.
-* containerId: The 'id' of the container.
+* containerId: The 'id' of the container. When using multiple rows of monitor's in the same page this option must be set to unique values.
 * font: The font size followed by the font type.
+
+Return value
+------------
+
+The plugin returns the timerId that can be used to cancel the interval set for refreshing server status. Use window.clearInterval(timerId) to stop data refresh dynamically.
 
 Constraints
 -----------
 
 * Number of custom uptime ratio's is limited to first 3. If you provide for eg, 1-7-30-360, only 1,7 and 30 are considered.
 * Width and Height provided by the options must be sufficient enough to hold all monitors. This is not automated. If not, monitors over write. Just increase the width in which case.
-* Currently only one row of monitors is supported. You might not be able to create a new row with new set of monitors on the same page. Will be fixed shortly.
-* The states are static and does not have refresh capability. Will be fixed shortly. 
+* Only one row of monitors is supported. To add more monitors create a new row by calling the API again with a new 'containerId' option. This is important to be unique or else the graphics will overwrite.
+* The states refresh configuration is in seconds. The max rate at which all monitors in a row will refresh is 1 sec.
 
 Live in Action
 --------------
