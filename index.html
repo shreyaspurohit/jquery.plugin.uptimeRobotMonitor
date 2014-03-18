@@ -45,14 +45,14 @@
 <p>On document ready, call the plugin by providing the minimum configurations - monitor API Key (generated from your uptime robot control panel) and a server name to display.</p>
 
 <pre><code>$( document ).ready(function() {
-    $("body").uptimeRobotMonitor(options);
+    var timerId = $("body").uptimeRobotMonitor(options);
 });
 </code></pre>
 
 <p>Example:</p>
 
 <pre><code>$( document ).ready(function() {
-    $("body").uptimeRobotMonitor({monitorConfs: [
+var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
     {
         apiKey: "XXX",
         name: "Server 1",
@@ -92,7 +92,9 @@
     height: "240",
     containerClass: "uptimeContainer",
     containerId: "uptimeContainer",
-    font: "12px Arial"
+    font: "12px Arial",
+    refresh: true,
+    refreshInterval: 60     
 }
 </code></pre>
 
@@ -104,8 +106,11 @@
 <li>color: The base color for this monitor.</li>
 <li>unavailableColor: The color to use to designate server was not available.</li>
 <li>backgroundColor: The background color to use for this monitor.</li>
-<li>percLabelColor: The color of the text font for this monitor.
-*customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.</li>
+<li>percLabelColor: The color of the text font for this monitor.</li>
+<li>customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.</li>
+<li>refresh: If true refresh's the the sever status repeatedly.</li>
+<li>refreshInterval: The interval at which the server status will refresh continuously in seconds.<br>
+</li>
 </ul>
 </li>
 <li>color: The font color in the container containing all the monitors.</li>
@@ -113,16 +118,21 @@
 <li>width: Width of the container.</li>
 <li>height: Height of the container.</li>
 <li>containerClass: The CSS class associated with container that you can target.</li>
-<li>containerId: The 'id' of the container.</li>
+<li>containerId: The 'id' of the container. When using multiple rows of monitor's in the same page this option must be set to unique values.</li>
 <li>font: The font size followed by the font type.</li>
 </ul><h2>
+<a name="return-value" class="anchor" href="#return-value"><span class="octicon octicon-link"></span></a>Return value</h2>
+
+<p>The plugin returns the timerId that can be used to cancel the interval set for refreshing server status. Use window.clearInterval(timerId) to stop data refresh dynamically.</p>
+
+<h2>
 <a name="constraints" class="anchor" href="#constraints"><span class="octicon octicon-link"></span></a>Constraints</h2>
 
 <ul>
 <li>Number of custom uptime ratio's is limited to first 3. If you provide for eg, 1-7-30-360, only 1,7 and 30 are considered.</li>
 <li>Width and Height provided by the options must be sufficient enough to hold all monitors. This is not automated. If not, monitors over write. Just increase the width in which case.</li>
-<li>Currently only one row of monitors is supported. You might not be able to create a new row with new set of monitors on the same page. Will be fixed shortly.</li>
-<li>The states are static and does not have refresh capability. Will be fixed shortly. </li>
+<li>Only one row of monitors is supported. To add more monitors create a new row by calling the API again with a new 'containerId' option. This is important to be unique or else the graphics will overwrite.</li>
+<li>The states refresh configuration is in seconds. The max rate at which all monitors in a row will refresh is 1 sec.</li>
 </ul><h2>
 <a name="live-in-action" class="anchor" href="#live-in-action"><span class="octicon octicon-link"></span></a>Live in Action</h2>
 
