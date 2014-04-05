@@ -71,7 +71,7 @@ Defaults in Monitor mode:
         	percLabelColor: "#000000",		            	
         	customUptimeRatio: "1-7"
 	    }],			            
-	    color: "green",
+	    color: "#000000",
 	    backgroundColor: "#F5F5F5",
 	    width: "640",
 	    height: "240",
