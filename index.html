@@ -31,7 +31,12 @@
         <h1>
 <a name="jquery-uptime-robot-plugin" class="anchor" href="#jquery-uptime-robot-plugin"><span class="octicon octicon-link"></span></a>Jquery Uptime Robot Plugin</h1>
 
-<p>The plugin uses UptimeRobot (<a href="http://uptimerobot.com/">http://uptimerobot.com/</a>) API's to display the server statuses. It displays the current server status as UP or DOWN and has the capacity to display uptimes for a max 3 custom days range.</p>
+<p>The plugin uses UptimeRobot (<a href="http://uptimerobot.com/">http://uptimerobot.com/</a>) API's to display the server statuses. It displays the current server status as UP or DOWN and has the capacity to display uptimes for a max 3 custom days range. The plugin supports both account API keys and Monitor specific API keys. </p>
+
+<h2>
+<a name="modes" class="anchor" href="#modes"><span class="octicon octicon-link"></span></a>Modes</h2>
+
+<p>Plugin can be used in two modes of operation. Monitor mode, where monitor specific API keys are used and Account mode, where account API key is used. When in account mode, all the monitors in account are displayed row by row with number of rows configured during plugin invocation.</p>
 
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
@@ -42,39 +47,54 @@
     src="http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/src/js/jquery.uptimeRobotMonitor.js"&gt;&lt;/script&gt;
 </code></pre>
 
-<p>On document ready, call the plugin by providing the minimum configurations - monitor API Key (generated from your uptime robot control panel) and a server name to display.</p>
+<p>On document ready, call the plugin by providing the minimum configurations.</p>
 
 <pre><code>$( document ).ready(function() {
     var timerId = $("body").uptimeRobotMonitor(options);
 });
 </code></pre>
 
-<p>Example:</p>
+<p>Monitor specific API key Example:</p>
 
 <pre><code>$( document ).ready(function() {
 var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
     {
         apiKey: "XXX",
-        name: "Server 1",
-        color: "#5CB85C",
+        name: "Server 1 - OPTIONAL",
+        color: "#5CB85C - OPTIONAL",
     },
     {
         apiKey: "XXX",
-        name: "Server 2",
-        color: "#957EE6"
+        name: "Server 2 - OPTIONAL",
+        color: "#957EE6 - OPTIONAL"
     },
     {
         apiKey: "XXX",
-        name: "Server 3",
-        color: "#E67EA8",
+        name: "Server 3 - OPTIONAL",
+        color: "#E67EA8 - OPTIONAL",
     }]});
+});
+</code></pre>
+
+<p>Account API Key Example:</p>
+
+<pre><code>$( document ).ready(function() {
+    var timerId = $("body").uptimeRobotMonitor({
+        mainApiKey: 'XXX',          
+        numOfRows: 1,
+        monitorConfs: [{
+            friendlyName: 'REAL NAME IN UPTIMEROBOT',
+            name: 'DISPLAY NAME - OPTIONAL',
+            color: '#E67EA8 - OPTIONAL'
+        }]
+    });
 });
 </code></pre>
 
 <h2>
 <a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h2>
 
-<p>Default:</p>
+<p>Defaults in Monitor mode:</p>
 
 <pre><code>{
     monitorConfs: [{
@@ -98,16 +118,43 @@ var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
 }
 </code></pre>
 
+<p>Defaults in Account mode:</p>
+
+<pre><code>{
+    monitorConfs: [{
+        friendlyName: "",
+        name: "",
+        color: "#5CB85C",
+        unavailableColor: "#E68A00",
+        backgroundColor: "#f5f5f5",
+        percLabelColor: "#000000",                      
+    }],
+    mainApiKey: "",
+    allMonitorCustomUptimeRatio:"1-7",
+    numOfRows: 1,
+    color: "#000000",
+    backgroundColor: "#F5F5F5",
+    width: "640",
+    height: "240",
+    containerClass: "uptimeContainer",
+    containerId: "uptimeContainer",
+    font: "12px Arial",
+    refresh: true,
+    refreshInterval: 60     
+}
+</code></pre>
+
 <ul>
 <li>monitorConfs: Configuration for every monitor.
 
 <ul>
-<li>apiKey: The monitor API Key (generated from your uptime robot control panel). Refer <a href="http://uptimerobot.com/api">http://uptimerobot.com/api</a> for more details.</li>
+<li>apiKey: The monitor specific API Key (generated from your uptime robot control panel). Refer <a href="http://uptimerobot.com/api">http://uptimerobot.com/api</a> for more details.</li>
 <li>color: The base color for this monitor.</li>
 <li>unavailableColor: The color to use to designate server was not available.</li>
 <li>backgroundColor: The background color to use for this monitor.</li>
 <li>percLabelColor: The color of the text font for this monitor.</li>
-<li>customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days.</li>
+<li>customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days. Used only in Monitor mode.</li>
+<li>friendlyName: The name of the monitor as configured in uptime robot control panel. Used only in Account mode.</li>
 </ul>
 </li>
 <li>color: The font color in the container containing all the monitors.</li>
@@ -120,6 +167,9 @@ var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
 <li>refresh: If true refresh's the the sever status repeatedly.</li>
 <li>refreshInterval: The interval at which the server status will refresh continuously in seconds.<br>
 </li>
+<li>mainApiKey: The main account specific API key (generated from your uptime robot control panel). Refer <a href="http://uptimerobot.com/api">http://uptimerobot.com/api</a> for more details.</li>
+<li>allMonitorCustomUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days. Used only in Account mode. Applies to all the monitors in the account.</li>
+<li>numOfRows: Number of rows to split all the monitors in the account into. Used only in Account mode invocation.</li>
 </ul><h2>
 <a name="return-value" class="anchor" href="#return-value"><span class="octicon octicon-link"></span></a>Return value</h2>
 
@@ -131,12 +181,17 @@ var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
 <ul>
 <li>Number of custom uptime ratio's is limited to first 3. If you provide for eg, 1-7-30-360, only 1,7 and 30 are considered.</li>
 <li>Width and Height provided by the options must be sufficient enough to hold all monitors. This is not automated. If not, monitors over write. Just increase the width in which case.</li>
-<li>Only one row of monitors is supported. To add more monitors create a new row by calling the API again with a new 'containerId' option. This is important to be unique or else the graphics will overwrite.</li>
+<li>Only one row of monitors is supported in Monitor mode. To add more monitors create a new row by calling the API again with a new 'containerId' option. This is important to be unique or else the graphics will overwrite. (In Account mode all monitors are displayed split in number of rows as configured)</li>
 <li>The states refresh configuration is in seconds. The max rate at which all monitors in a row will refresh is 1 sec.</li>
 </ul><h2>
 <a name="live-in-action" class="anchor" href="#live-in-action"><span class="octicon octicon-link"></span></a>Live in Action</h2>
 
-<p>The plugin can be seen live in action <a href="http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html">http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html</a> and <a href="http://unlockalert.bitourea.com/server-status">http://unlockalert.bitourea.com/server-status</a> which uses the uptime monitors for my servers.</p>
+<p>The plugin can be seen live in action <a href="http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html">http://shreyaspurohit.github.io/jquery.plugin.uptimeRobotMonitor/static/servers.html</a> and <a href="http://unlockalert.bitourea.com/server-status">http://unlockalert.bitourea.com/server-status</a> which uses the uptime monitors for my servers. The demo uses the Monitor mode. </p>
+
+<h2>
+<a name="note" class="anchor" href="#note"><span class="octicon octicon-link"></span></a>Note</h2>
+
+<p>In Account mode the account API key is used. This key allows one to add/delete and do more changes to the monitor. I would not suggest embedding this in any webpage where anyone can view source and find your key. The plugin supports this for ease of use with account with 30-50 monitors. It will be nice if we can have  another key like account API key but with no destructive/modification powers that allows to query all the monitors in account. </p>
 
 <h2>
 <a name="project-site" class="anchor" href="#project-site"><span class="octicon octicon-link"></span></a>Project Site</h2>
