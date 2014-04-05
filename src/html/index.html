@@ -29,7 +29,6 @@
 				var timerId2 = $("body").uptimeRobotMonitor({monitorConfs: [
 				{
 					apiKey: "m776062966-688de8919b17dc1c2cc15087",
-					name: "Server 2",
 					color: "#957EE6"
 				},
 				{
@@ -46,6 +45,24 @@
 				
 				$("body").append("<div><label>Timer Id 1: " + timerId1 + "</label></div>")
 				$("body").append("<div><label>Timer Id 2: " + timerId2 + "</label></div>")
+				$("body").append("<br /> <br />")
+				$("body").append("<div><label>Using Main API key</label></div>")
+				
+				var timerId3 = $("body").uptimeRobotMonitor({
+					mainApiKey: 'XXXXXX',
+					containerId: "mainApiContainerId",
+					allMonitorCustomUptimeRatio:"1-7-30",
+					numOfRows: 1,
+					refresh: true,
+					monitorConfs: [{
+						friendlyName: 'UAS Cloudbees',
+						name: 'UASC',
+						color: '#E67EA8'
+					},{
+						friendlyName: 'UAS1',
+						color: '#957EE6'
+					}]
+				});
 			});
 		</script>
 		<style type="text/css">
