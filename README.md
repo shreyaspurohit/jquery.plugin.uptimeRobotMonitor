@@ -95,6 +95,7 @@ Defaults in Account mode:
 	    }],
 		mainApiKey: "",
 		allMonitorCustomUptimeRatio:"1-7",
+		allMonitorDefaultColor:"#5CB85C",
 		numOfRows: 1,
 	    color: "#000000",
 	    backgroundColor: "#F5F5F5",
@@ -114,7 +115,7 @@ Defaults in Account mode:
 	* backgroundColor: The background color to use for this monitor.
 	* percLabelColor: The color of the text font for this monitor.
 	* customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days. Used only in Monitor mode.
-	* friendlyName: The name of the monitor as configured in uptime robot control panel. Used only in Account mode.
+	* friendlyName: The name of the monitor as configured in uptime robot control panel. Used only in Account mode. Must match for monitor specific configurations take place.
 * color: The font color in the container containing all the monitors.
 * backgroundColor: The background color of the container containing the monitors.
 * width: Width of the container.
@@ -126,6 +127,7 @@ Defaults in Account mode:
 * refreshInterval: The interval at which the server status will refresh continuously in seconds.	
 * mainApiKey: The main account specific API key (generated from your uptime robot control panel). Refer http://uptimerobot.com/api for more details.
 * allMonitorCustomUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days. Used only in Account mode. Applies to all the monitors in the account.
+* allMonitorDefaultColor: The default color of all the monitors when in Account mode. This can be overridden using monitorConfs and providing the correct friendlyName.
 * numOfRows: Number of rows to split all the monitors in the account into. Used only in Account mode invocation.
 
 Return value
