@@ -131,6 +131,7 @@ var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
     }],
     mainApiKey: "",
     allMonitorCustomUptimeRatio:"1-7",
+    allMonitorDefaultColor:"#5CB85C",
     numOfRows: 1,
     color: "#000000",
     backgroundColor: "#F5F5F5",
@@ -154,7 +155,7 @@ var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
 <li>backgroundColor: The background color to use for this monitor.</li>
 <li>percLabelColor: The color of the text font for this monitor.</li>
 <li>customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days. Used only in Monitor mode.</li>
-<li>friendlyName: The name of the monitor as configured in uptime robot control panel. Used only in Account mode.</li>
+<li>friendlyName: The name of the monitor as configured in uptime robot control panel. Used only in Account mode. Must match for monitor specific configurations take place.</li>
 </ul>
 </li>
 <li>color: The font color in the container containing all the monitors.</li>
@@ -169,6 +170,7 @@ var timerId = $("body").uptimeRobotMonitor({monitorConfs: [
 </li>
 <li>mainApiKey: The main account specific API key (generated from your uptime robot control panel). Refer <a href="http://uptimerobot.com/api">http://uptimerobot.com/api</a> for more details.</li>
 <li>allMonitorCustomUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days. Used only in Account mode. Applies to all the monitors in the account.</li>
+<li>allMonitorDefaultColor: The default color of all the monitors when in Account mode. This can be overridden using monitorConfs and providing the correct friendlyName.</li>
 <li>numOfRows: Number of rows to split all the monitors in the account into. Used only in Account mode invocation.</li>
 </ul><h2>
 <a name="return-value" class="anchor" href="#return-value"><span class="octicon octicon-link"></span></a>Return value</h2>
