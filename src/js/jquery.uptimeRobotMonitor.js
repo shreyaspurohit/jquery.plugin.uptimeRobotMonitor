@@ -88,6 +88,7 @@
 	function getMonitorConfForMainAPI(monitor, $setting){
 		var monitorConfResult = $.extend(true, {'friendlyName' : monitor.friendlyname}, defaultMonitorConf); //Duplicate so as to not overwrite the real default conf
 		
+		monitorConfResult['color'] = $setting.allMonitorDefaultColor;		
 		$.each($setting.monitorConfs, function(index, monitorConf){
 			if(monitor.friendlyname == monitorConf.friendlyName){
 				monitorConfResult = $.extend(monitorConfResult, monitorConf);
@@ -384,6 +385,7 @@
 			mainApiKey: "",
 			allMonitorCustomUptimeRatio:"1-7",
 			numOfRows: 1,
+			allMonitorDefaultColor: "#5CB85C",
             color: "#000000",
             backgroundColor: "#f5f5f5",
             width: "640",
