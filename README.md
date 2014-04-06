@@ -114,6 +114,7 @@ Defaults in Account mode:
 	* unavailableColor: The color to use to designate server was not available.
 	* backgroundColor: The background color to use for this monitor.
 	* percLabelColor: The color of the text font for this monitor.
+	* name: The display name of the monitor on the visualization. In case of Account mode this will be used only if the friendlyName parameter matches the name in your UptimeRobot account.
 	* customUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days. Used only in Monitor mode.
 	* friendlyName: The name of the monitor as configured in uptime robot control panel. Used only in Account mode. Must match for monitor specific configurations take place.
 * color: The font color in the container containing all the monitors.
