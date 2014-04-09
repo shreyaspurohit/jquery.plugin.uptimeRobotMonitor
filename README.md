@@ -48,7 +48,8 @@ Account API Key Example:
 	$( document ).ready(function() {
 		var timerId = $("body").uptimeRobotMonitor({
 			mainApiKey: 'XXX',			
-			numOfRows: 1,
+			//numOfRows: 1, //Use this or numOfMonitorsPerRow
+			numOfMonitorsPerRow: 3,
 			monitorConfs: [{
 				friendlyName: 'REAL NAME IN UPTIMEROBOT',
 				name: 'DISPLAY NAME - OPTIONAL',
@@ -97,6 +98,7 @@ Defaults in Account mode:
 		allMonitorCustomUptimeRatio:"1-7",
 		allMonitorDefaultColor:"#5CB85C",
 		numOfRows: 1,
+		numOfMonitorsPerRow: 0,
 	    color: "#000000",
 	    backgroundColor: "#F5F5F5",
 	    width: "640",
@@ -130,6 +132,7 @@ Defaults in Account mode:
 * allMonitorCustomUptimeRatio: In the increasing order, the custom uptime server stats in days separated by "-". "1-7" means, server monitor stats for 1 and 7 days. Used only in Account mode. Applies to all the monitors in the account.
 * allMonitorDefaultColor: The default color of all the monitors when in Account mode. This can be overridden using monitorConfs and providing the correct friendlyName.
 * numOfRows: Number of rows to split all the monitors in the account into. Used only in Account mode invocation.
+* numOfMonitorsPerRow: When configured more than 0 takes priority over numOfRows. numOfRows is calculated considering the total number of monitors returned from server. Used only in Account mode invocation.
 
 Return value
 ------------

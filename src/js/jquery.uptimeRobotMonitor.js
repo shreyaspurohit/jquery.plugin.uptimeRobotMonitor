@@ -45,13 +45,29 @@
 	};
 
 	var mainApiKeyMethods = {
-		invoke: function($setting){
+		invoke: function($this, $setting){
+			var numberOfMonitorsPerRow = $setting.numOfMonitorsPerRow;
+			var numOfRows = $setting.numOfRows;
+			if(numberOfMonitorsPerRow <= 0){
+				//Init the rows as they are configured to be atleast 1 and number of monitors per row is not configured.
+				mainApiKeyMethods.init($this, $setting, $setting.numOfRows);
+			}
+			
 			var url = formGetMonitorUrl({'apiKey' : $setting.mainApiKey, 'customUptimeRatio' : $setting.allMonitorCustomUptimeRatio});
 			$.getJSON(url, function( data ) {
 				console.log( "Success, url: " + url + ", data: " + JSON.stringify(data));
 				if(data.stat == "ok" && data.monitors.monitor && data.monitors.monitor.length > 0){//Only if OK response
 					var monitors = data.monitors.monitor;
-					var numberOfMonitorsPerRow = Math.ceil(monitors.length / $setting.numOfRows.toFixed(2));
+					
+					if($setting.numOfMonitorsPerRow <= 0){
+						numberOfMonitorsPerRow = Math.ceil(monitors.length / $setting.numOfRows.toFixed(2));						
+					}else{
+					//Calculate number of rows and init them. This has to be delayed till here since the total number of monitors is obtained from server
+					//and using configured number of monitor's per row we can calculate the number of rows.
+						numOfRows = Math.ceil(monitors.length / $setting.numOfMonitorsPerRow.toFixed(2));
+						mainApiKeyMethods.init($this, $setting, numOfRows);
+					}
+					
 					var i = 0;										
 					while(monitors.length){
 						var containerId = getContainerIdForRowNum($setting, i);
@@ -67,9 +83,9 @@
 				}
 			});
 		},
-		init: function($this, $setting){			
+		init: function($this, $setting, numOfRows){			
 			var allCanvasReady = true;			
-			for(var i=0; i < $setting.numOfRows; i++){
+			for(var i=0; i < numOfRows; i++){
 				var containerId = getContainerIdForRowNum($setting, i);
 				var containerSelector = '#' + containerId;
 				if($(containerSelector).length > 0){
@@ -385,6 +401,7 @@
 			mainApiKey: "",
 			allMonitorCustomUptimeRatio:"1-7",
 			numOfRows: 1,
+			numOfMonitorsPerRow: 0,
 			allMonitorDefaultColor: "#5CB85C",
             color: "#000000",
             backgroundColor: "#f5f5f5",
@@ -409,9 +426,9 @@
 			if($setting.mainApiKey.length <= 0 && 
 				methods.init($this, $setting)){				
 				methods.invoke($setting, methods.handleApiResponseForCanvas);
-			}else if(mainApiKeyMethods.init($this, $setting)){
+			}else{
 			//Use main api key
-				mainApiKeyMethods.invoke($setting);				
+				mainApiKeyMethods.invoke($this, $setting);				
 			}
 		}
 				
